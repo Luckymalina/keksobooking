@@ -1,8 +1,9 @@
+'use strict';
+
 var totalAds = 8;
 var menu = document.querySelector('.map');
 var mapPins = document.querySelector('.map__pins');
 var mapPinTemplate = document.querySelector('template').content.querySelector('.map__pin');
-var mapPinFragment = document.createDocumentFragment();
 var adTemplate = document.querySelector('template').content.querySelector('.map__card');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
 var popupPhoto = document.querySelector('.popup__photo');
@@ -42,7 +43,10 @@ var getAvatars = function () {
   for (var i = 0; i < 8; i++) {
     avatarsList[i] = 'img/avatars/user' + i + '.png';
   }
+  return avatarsList;
 };
+
+getAvatars();
 
 var getRandomMax = function (max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -60,7 +64,7 @@ var randomArrSort = function (array) {
     array[j] = temp;
   }
   return array;
-}
+};
 
 var getAdsList = function () {
   var adsList = [];
@@ -78,8 +82,11 @@ var getAdsList = function () {
     adsList[adsItemNum].offer.photos = offersOptions.photos.sort(randomArrSort).splice(0, getRandomMax(offersOptions.photos.length));
     adsList[adsItemNum].location.x = getRandomMinMax(location.x.min, location.x.max);
     adsList[adsItemNum].location.y = getRandomMinMax(location.y.min, location.y.max);
-  };
+  }
+  return adsList;
 };
+
+getAdsList();
 
 menu.classList.remove('map--faded');
 
@@ -89,7 +96,7 @@ var createPin = function (i) {
   pinItem.style.textcontent = 'left: ' + adsList[i].location.y + 'px; top: ' + adsList[i].location.x + 'px;';
   pinItem.content.querySelector('img').alt.textcontent = adsList[i].offer.title;
   return pinItem;
-}
+};
 
 var createPinList = function (totalPins) {
   var pinsFragment = document.createDocumentFragment();
@@ -97,7 +104,7 @@ var createPinList = function (totalPins) {
     pinsFragment.appendChild(createPin(pinNum));
   }
   return pinsFragment;
-}
+};
 
 mapPins.appendChild(createPinList(totalAds));
 
@@ -108,7 +115,7 @@ var createFeatures = function () {
     ad.content.querySelector('.popup__features').content.querySelector('li').className = 'popup__feature ' + 'popup__feature--' + adsList[adsItemNum].offer.features[i];
     featuresFragment.appendChild(ad.content.querySelector('.popup__features').content.querySelector('li'));
   }
-}
+};
 
 var createAd = function (i) {
   var ad = adTemplate.cloneNode(true);
@@ -132,7 +139,7 @@ var createPopupPhoto = function (i) {
     popupPhotoFragment.appendChild(ad.appendChild(popupPhoto));
   }
   return popupPhotoFragment;
-}
+};
 
 mapFiltersContainer.insertAdjacentHTML('afterbegin', createAd(0));
 
