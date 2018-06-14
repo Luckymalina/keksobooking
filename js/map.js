@@ -70,9 +70,9 @@ var offersOptions = {
     }
   }
 };
+var avatarsList = [];
 
 var getAvatars = function () {
-  var avatarsList = [];
   for (var i = 0; i < 8; i++) {
     avatarsList[i].src = 'img/avatars/user' + i + '.png';
   }
@@ -110,6 +110,7 @@ var createPhotosSort = function () {
 
 var getAdItem = function (i) {
   var adItem = {};
+  getAvatars();
   adItem.author.avatar = avatarsList[i];
   adItem.offer.title = offersOptions.TITLES[i];
   adItem.offer.price = getRandom(offersOptions.PRICE.min, offersOptions.PRICE.max);
