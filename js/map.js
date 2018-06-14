@@ -71,6 +71,8 @@ var offersOptions = {
   }
 };
 var avatarsList = [];
+var adsList = [];
+var ad = adTemplate.cloneNode(true);
 
 var getAvatars = function () {
   for (var i = 0; i < 8; i++) {
@@ -95,7 +97,7 @@ var randomArrSort = function (array) {
 var createFeaturesSort = function () {
   var featuresList = [];
   for (var i = 0; i < offersOptions.FEATURES.length; i++) {
-     featuresList[i] = offersOptions.FEATURES[i];
+    featuresList[i] = offersOptions.FEATURES[i];
   }
   return featuresList.sort(randomArrSort).splice(0, getRandom(0, offersOptions.FEATURES.length));
 }
@@ -129,7 +131,6 @@ var getAdItem = function (i) {
 }
 
 var getAdsList = function () {
-  var adsList = [];
   for (var i = 0; i < TOTAL_ADS; i++) {
     adsList[i] = getAdItem(i);
   }
@@ -139,6 +140,7 @@ menu.classList.remove('map--faded');
 
 var createPin = function (i) {
   var pinItem = mapPinTemplate.cloneNode(true);
+  getAdsList();
   pinItem.content.querySelector('img').src = adsList[i].author.avatar;
   pinItem.style.left = adsList[i].LOCATION.Y + 'px';
   pinItem.style.top = adsList[i].LOCATION.X + 'px';
@@ -158,6 +160,7 @@ mapPins.appendChild(createPinsFragment());
 
 var createPopupPhotos = function (i) {
   var popupPhotoFragment = document.createDocumentFragment();
+  getAdsList();
   for (var i = 0; i < adsList[i].offer.PHOTOS.length; i++) {
     ad.appendChild(popupPhoto).src = adsList[i].offer.PHOTOS[i];
     popupPhotoFragment.appendChild(ad.appendChild(popupPhoto));
@@ -166,7 +169,7 @@ var createPopupPhotos = function (i) {
 };
 
 var createAd = function (i) {
-  var ad = adTemplate.cloneNode(true);
+  getAdsList();
   ad.querySelector('.map__card img').src.textContent = adsList[i].author.avatar;
   ad.querySelector('.popup__title').textContent = adsList[i].offer.title;
   ad.querySelector('.popup__text--PRICE').innerHTML = adsList[i].offer.PRICE + '&#x20bd;<span>/ночь</span>';
