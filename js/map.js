@@ -100,7 +100,7 @@ var createFeaturesSort = function () {
     featuresList[i] = offersOptions.FEATURES[i];
   }
   return featuresList.sort(randomArrSort).splice(0, getRandom(0, offersOptions.FEATURES.length));
-}
+};
 
 var createPhotosSort = function () {
   var photosList = [];
@@ -108,7 +108,7 @@ var createPhotosSort = function () {
     photosList[i] = offersOptions.PHOTOS[i];
   }
   return photosList.sort(randomArrSort).splice(0, getRandom(0, offersOptions.PHOTOS.length));
-}
+};
 
 var getAdItem = function (i) {
   var adItem = {};
@@ -128,7 +128,7 @@ var getAdItem = function (i) {
   adItem.location.y = getRandom(offersOptions.LOCATION.Y.MIN, offersOptions.LOCATION.Y.MAX);
   adItem.offer.address = adItem[i].LOCATION.X + ', ' + adItem[i].LOCATION.Y;
   return adItem;
-}
+};
 
 var getAdsList = function () {
   for (var i = 0; i < TOTAL_ADS; i++) {
@@ -158,7 +158,7 @@ var createPinsFragment = function () {
 
 mapPins.appendChild(createPinsFragment());
 
-var createPopupPhotos = function (i) {
+var createPopupPhotos = function () {
   var popupPhotoFragment = document.createDocumentFragment();
   getAdsList();
   for (var i = 0; i < adsList[i].offer.PHOTOS.length; i++) {
@@ -179,7 +179,7 @@ var createAd = function (i) {
   ad.querySelector('.popup__features').innerHTML = '';
   // ad.querySelector('.popup__features').appendChild('li').className = '';
   ad.querySelector('.popup__description').textContent = adsList[i].offer.description;
-  createPopupPhotos(i);
+  createPopupPhotos();
   return ad;
 };
 
