@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дмитрий Метельков](https://up.htmlacademy.ru/javascript/14/user/512127).
-* Наставник: [Олег Петров](https://up.htmlacademy.ru/javascript/14/user/42390).
+* Наставник: [Александр Сушко](https://up.htmlacademy.ru/javascript/14/user/281347).
 
 ---
 
