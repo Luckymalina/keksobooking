@@ -77,6 +77,9 @@ var mapPinTemplate = template.content.querySelector('.map__pin');
 var adTemplate = template.content.querySelector('.map__card');
 var popupPhoto = template.content.querySelector('.popup__photo');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
+var mapPinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var adFormFieldsets = adForm.querySelectorAll('.ad-form__element');
 var typesMap = {
   palace: 'Дворец',
   flat: 'Квартира',
@@ -136,8 +139,6 @@ for (var k = 0; k < TOTAL_ADS; k++) {
   adsArr[k] = createAdObj(k);
 }
 
-map.classList.remove('map--faded');
-
 var createPinMarkup = function (pinData) {
   var pinItem = mapPinTemplate.cloneNode(true);
   pinItem.querySelector('img').src = pinData.author.avatar;
@@ -194,3 +195,15 @@ var createAd = function (adData) {
 };
 
 mapFiltersContainer.insertAdjacentElement('beforebegin', createAd(adsArr[0]));
+
+for (var t = 0; t < adFormFieldsets.length; t++) {
+  adFormFieldsets[t].setAttribute('disabled', 'disabled');
+};
+
+mapPinMain.addEventListener('mouseup', function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  for (var i = 0; i < adFormFieldsets.length; i++) {
+    adFormFieldsets[i].removeAttribute('disabled', 'disabled');
+  }
+});
