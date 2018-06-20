@@ -80,6 +80,7 @@ var mapFiltersContainer = document.querySelector('.map__filters-container');
 var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 var adFormFieldsets = adForm.querySelectorAll('.ad-form__element');
+var addressInput = adForm.querySelector('#address');
 var typesMap = {
   palace: 'Дворец',
   flat: 'Квартира',
@@ -198,12 +199,20 @@ mapFiltersContainer.insertAdjacentElement('beforebegin', createAd(adsArr[0]));
 
 for (var t = 0; t < adFormFieldsets.length; t++) {
   adFormFieldsets[t].setAttribute('disabled', 'disabled');
-};
+}
 
-mapPinMain.addEventListener('mouseup', function () {
+var activationForm = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   for (var i = 0; i < adFormFieldsets.length; i++) {
     adFormFieldsets[i].removeAttribute('disabled', 'disabled');
   }
+};
+
+addressInput.value = (mapPinMain.offsetTop - mapPinMain.offsetHeight / 2) + ', ' + (mapPinMain.offsetLeft - mapPinMain.offsetWidth / 2);
+
+mapPinMain.addEventListener('mouseup', activationForm);
+mapPinMain.addEventListener('mouseup', function () {
+  addressInput.value = (mapPinMain.offsetTop + PIN_SIZE.HEIGHT) + ', ' + (mapPinMain.offsetLeft + PIN_SIZE.WIDTH / 2);
 });
+
