@@ -81,6 +81,7 @@ var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 var adFormFieldsets = adForm.querySelectorAll('.ad-form__element');
 var addressInput = adForm.querySelector('#address');
+var isActivate = false;
 var typesMap = {
   palace: 'Дворец',
   flat: 'Квартира',
@@ -157,8 +158,6 @@ var renderPinsMarkup = function (pinsData) {
   mapPins.appendChild(mapPinsFragment);
 };
 
-renderPinsMarkup(adsArr);
-
 var createFeatureFragment = function (adData) {
   var featureFragment = document.createDocumentFragment();
   for (var j = 0; j < adData.offer.features.length; j++) {
@@ -195,8 +194,6 @@ var createAd = function (adData) {
   return ad;
 };
 
-mapFiltersContainer.insertAdjacentElement('beforebegin', createAd(adsArr[0]));
-
 for (var t = 0; t < adFormFieldsets.length; t++) {
   adFormFieldsets[t].setAttribute('disabled', 'disabled');
 }
@@ -213,6 +210,15 @@ addressInput.value = (mapPinMain.offsetTop - mapPinMain.offsetHeight / 2) + ', '
 
 mapPinMain.addEventListener('mouseup', activationForm);
 mapPinMain.addEventListener('mouseup', function () {
+  isActivate = true;
+});
+
+mapPinMain.addEventListener('mouseup', function () {
   addressInput.value = (mapPinMain.offsetTop + PIN_SIZE.HEIGHT) + ', ' + (mapPinMain.offsetLeft + PIN_SIZE.WIDTH / 2);
 });
 
+mapPinMain.addEventListener('mouseup', function () {
+  if (isActivate) {
+    renderPinsMarkup(adsArr);
+  }
+});
