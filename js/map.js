@@ -68,6 +68,7 @@ var PIN_SIZE = {
   WIDTH: 50,
   HEIGHT: 70
 };
+var ESC_KEYCODE = 27;
 
 var adsArr = [];
 var template = document.querySelector('template');
@@ -88,6 +89,12 @@ var typesMap = {
   house: 'Дом',
   bungalo: 'Бунгало'
 };
+
+addressInput.value = (mapPinMain.offsetTop - mapPinMain.offsetHeight / 2) + ', ' + (mapPinMain.offsetLeft - mapPinMain.offsetWidth / 2);
+
+for (var l = 0; l < adFormFieldsets.length; l++) {
+  adFormFieldsets[l].setAttribute('disabled', 'disabled');
+}
 
 var getRandomFromInterval = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -147,6 +154,13 @@ var createPinMarkup = function (pinData) {
   pinItem.style.left = pinData.location.x + 'px';
   pinItem.style.top = pinData.location.y + 'px';
   pinItem.querySelector('img').alt = pinData.offer.title;
+  pinItem.addEventListener('click', function () {
+    var mapCard = map.querySelector('.map__card');
+    if (mapCard) {
+      mapCard.remove();
+    }
+    createAd(pinData);
+  });
   return pinItem;
 };
 
@@ -191,12 +205,18 @@ var createAd = function (adData) {
   ad.querySelector('.popup__description').textContent = adData.offer.description;
   ad.querySelector('.popup__photos').removeChild(ad.querySelector('.popup__photo'));
   ad.querySelector('.popup__photos').appendChild(createPhotosFragment(adData));
+  mapFiltersContainer.insertAdjacentElement('beforebegin', ad);
+  var closeAd = ad.querySelector('.popup__close');
+  closeAd.addEventListener('click', function () {
+    ad.remove();
+  });
+  window.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      ad.remove();
+    }
+  });
   return ad;
 };
-
-for (var t = 0; t < adFormFieldsets.length; t++) {
-  adFormFieldsets[t].setAttribute('disabled', 'disabled');
-}
 
 var activationForm = function () {
   map.classList.remove('map--faded');
@@ -206,19 +226,14 @@ var activationForm = function () {
   }
 };
 
-addressInput.value = (mapPinMain.offsetTop - mapPinMain.offsetHeight / 2) + ', ' + (mapPinMain.offsetLeft - mapPinMain.offsetWidth / 2);
-
-mapPinMain.addEventListener('mouseup', activationForm);
-mapPinMain.addEventListener('mouseup', function () {
-  isActivate = true;
-});
-
-mapPinMain.addEventListener('mouseup', function () {
+var fillAddress = function () {
   addressInput.value = (mapPinMain.offsetTop + PIN_SIZE.HEIGHT) + ', ' + (mapPinMain.offsetLeft + PIN_SIZE.WIDTH / 2);
-});
+};
 
 mapPinMain.addEventListener('mouseup', function () {
-  if (isActivate) {
+  if (!isActivate) {
+    activationForm();
     renderPinsMarkup(adsArr);
   }
+  fillAddress();
 });
