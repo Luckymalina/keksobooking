@@ -230,6 +230,7 @@ var activationForm = function () {
   for (var i = 0; i < adFormFieldsets.length; i++) {
     adFormFieldsets[i].removeAttribute('disabled', 'disabled');
   }
+  adFormHeader.disabled = false;
 };
 
 var fillAddress = function () {
