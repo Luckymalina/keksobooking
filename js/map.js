@@ -81,6 +81,7 @@ var mapFiltersContainer = document.querySelector('.map__filters-container');
 var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 var adFormFieldsets = adForm.querySelectorAll('.ad-form__element');
+var adFormHeader = adForm.querySelector('.ad-form-header');
 var addressInput = adForm.querySelector('#address');
 var isActivate = false;
 var typesMap = {
@@ -92,8 +93,10 @@ var typesMap = {
 
 addressInput.value = (mapPinMain.offsetTop - mapPinMain.offsetHeight / 2) + ', ' + (mapPinMain.offsetLeft - mapPinMain.offsetWidth / 2);
 
+adFormHeader.disabled = true;
+
 for (var l = 0; l < adFormFieldsets.length; l++) {
-  adFormFieldsets[l].setAttribute('disabled', 'disabled');
+  adFormFieldsets[l].disabled = true;
 }
 
 var getRandomFromInterval = function (min, max) {
@@ -116,6 +119,12 @@ var randomCutArr = function (arr) {
   var length = getRandomFromInterval(0, copyArr.length);
   copyArr.slice(0, length);
   return copyArr;
+};
+
+var onEscDown = function (evt, popup) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    popup.remove();
+  }
 };
 
 var createAdObj = function (i) {
@@ -160,6 +169,7 @@ var createPinMarkup = function (pinData) {
       mapCard.remove();
     }
     createAd(pinData);
+    document.addEventListener('keydown', onEscDown);
   });
   return pinItem;
 };
@@ -209,11 +219,7 @@ var createAd = function (adData) {
   var closeAd = ad.querySelector('.popup__close');
   closeAd.addEventListener('click', function () {
     ad.remove();
-  });
-  window.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      ad.remove();
-    }
+    document.removeEventListener('click', onEscDown);
   });
   return ad;
 };
