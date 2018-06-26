@@ -84,7 +84,7 @@ var adFormFieldsets = document.querySelectorAll('.ad-form__element');
 var adFormHeader = document.querySelector('.ad-form-header');
 var addressInput = document.querySelector('#address');
 var success = document.querySelector('.success');
-var housingTypeInput = document.querySelector('#housing-type');
+var typeInput = document.querySelector('#type');
 var priceInput = document.querySelector('#price');
 var timeInInput = document.querySelector('#timein');
 var timeOutInput = document.querySelector('#timeout');
@@ -274,21 +274,21 @@ mapPinMain.addEventListener('mouseup', function () {
   fillAddress();
 });
 
-housingTypeInput.addEventListener('change', function () {
-  switch (housingTypeInput.value) {
-    case typesMap.bungalo:
+typeInput.addEventListener('change', function (evt) {
+  switch (evt.target.value) {
+    case 'bungalo':
       priceInput.min = 0;
       priceInput.placeholder = '0';
       break;
-    case typesMap.flat:
+    case 'flat':
       priceInput.min = 1000;
       priceInput.placeholder = '1000';
       break;
-    case typesMap.house:
+    case 'house':
       priceInput.min = 5000;
       priceInput.placeholder = '5000';
       break;
-    case typesMap.palace:
+    case 'palace':
       priceInput.min = 10000;
       priceInput.placeholder = '10000';
       break;
