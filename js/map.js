@@ -346,8 +346,7 @@ submitBtn.addEventListener('click', function () {
   checkPlaceValidity();
 });
 
-adForm.addEventListener('submit', function (evt) {
-  evt.preventDefault();
+var showSuccess = function () {
   success.classList.remove('hidden');
   success.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
@@ -357,5 +356,10 @@ adForm.addEventListener('submit', function (evt) {
   document.addEventListener('click', function () {
     success.classList.add('hidden');
   });
+};
+
+adForm.addEventListener('submit', function (evt) {
+  evt.preventDefault();
+  showSuccess();
   deactivationForm();
 });
