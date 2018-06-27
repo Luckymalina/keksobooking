@@ -69,7 +69,7 @@ var PIN_SIZE = {
   HEIGHT: 70
 };
 var ESC_KEYCODE = 27;
-var DRAG_LIMIT = {
+var DragLimit = {
   X: {
     MIN: 0,
     MAX: 1200
@@ -399,20 +399,24 @@ mapPinMain.addEventListener('mousedown', function (evt) {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
-    if (getMapPinMainCoords().y - shift.y >= DRAG_LIMIT.Y.MIN && getMapPinMainCoords().y - shift.y <= DRAG_LIMIT.Y.MAX) {
+    var mapPinCoords = {
+      y: getMapPinMainCoords().y,
+      x: getMapPinMainCoords().x
+    };
+    if (mapPinCoords.y - shift.y >= DragLimit.Y.MIN && mapPinCoords.y - shift.y <= DragLimit.Y.MAX) {
       mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
     }
-    if ((getMapPinMainCoords().x - PIN_SIZE.WIDTH / 2) - shift.x >= DRAG_LIMIT.X.MIN && (getMapPinMainCoords().x + PIN_SIZE.WIDTH / 2) - shift.x <= DRAG_LIMIT.X.MAX) {
+    if ((mapPinCoords.x - PIN_SIZE.WIDTH / 2) - shift.x >= DragLimit.X.MIN && (mapPinCoords.x + PIN_SIZE.WIDTH / 2) - shift.x <= DragLimit.X.MAX) {
       mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
     }
   };
 
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
-    map.removeEventListener('mousemove', onMouseMove);
-    map.removeEventListener('mouseup', onMouseUp);
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
   };
 
-  map.addEventListener('mousemove', onMouseMove);
-  map.addEventListener('mouseup', onMouseUp);
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 });
