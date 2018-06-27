@@ -245,11 +245,16 @@ var createAd = function (adData) {
 
 var getMapPinMainCoords = function () {
   var mapPinMainPosition = {
-    x: mapPinMain.offsetLeft + Math.floor(PIN_SIZE.WIDTH / 2),
-    y: mapPinMain.offsetTop + PIN_SIZE.HEIGHT
+    x: mapPinMain.offsetLeft + Math.floor(mapPinMain.offsetWidth / 2),
+    y: mapPinMain.offsetTop + mapPinMain.offsetHeight
   };
   return mapPinMainPosition;
 };
+
+var fillAddress = function () {
+  var addressInputCoords = getMapPinMainCoords();
+  addressInput.value = addressInputCoords.x + ', ' + addressInputCoords.y;
+}
 
 var activationForm = function () {
   map.classList.remove('map--faded');
@@ -258,8 +263,7 @@ var activationForm = function () {
     adFormFieldsets[i].removeAttribute('disabled', 'disabled');
   }
   adFormHeader.disabled = false;
-  var addressInputCoords = getMapPinMainCoords();
-  addressInput.value = addressInputCoords.x + ', ' + addressInputCoords.y;
+  fillAddress();
 };
 
 var deactivationForm = function () {
@@ -287,8 +291,7 @@ mapPinMain.addEventListener('mouseup', function () {
     activationForm();
     renderPinsMarkup(adsArr);
   }
-  var addressInputCoords = getMapPinMainCoords();
-  addressInput.value = addressInputCoords.x + ', ' + addressInputCoords.y;
+  fillAddress();
 });
 
 typeInput.addEventListener('change', function (evt) {
@@ -398,14 +401,23 @@ mapPinMain.addEventListener('mousedown', function (evt) {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
-    var mapPinCoords = getMapPinMainCoords();
-    if (mapPinCoords.y - shift.y >= DragLimit.Y.MIN && mapPinCoords.y - shift.y <= DragLimit.Y.MAX) {
-      mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+    var mapPinMainPosition = {
+      x: mapPinMain.offsetLeft - shift.x,
+      y: mapPinMain.offsetTop - shift.y
+    };
+    var Border = {
+      TOP: DragLimit.Y.MIN - mapPinMain.offsetHeight,
+      BOTTOM: DragLimit.Y.MAX - mapPinMain.offsetHeight,
+      LEFT: DragLimit.X.MIN,
+      RIGHT: DragLimit.X.MAX - mapPinMain.offsetWidth
+    };
+    if (mapPinMainPosition.x >= Border.LEFT && mapPinMainPosition.x <= Border.RIGHT) {
+      mapPinMain.style.left = mapPinMainPosition.x + 'px';
     }
-    if ((mapPinCoords.x - PIN_SIZE.WIDTH / 2) - shift.x >= DragLimit.X.MIN && (mapPinCoords.x + PIN_SIZE.WIDTH / 2) - shift.x <= DragLimit.X.MAX) {
-      mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+    if (mapPinMainPosition.y >= Border.TOP && mapPinMainPosition.y <= Border.BOTTOM) {
+      mapPinMain.style.top = mapPinMainPosition.y + 'px';
     }
-    addressInput.value = mapPinCoords.x + ', ' + mapPinCoords.y;
+    fillAddress();
   };
 
   var onMouseUp = function (upEvt) {
