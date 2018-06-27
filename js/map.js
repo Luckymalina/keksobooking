@@ -399,7 +399,7 @@ mapPinMain.addEventListener('mousedown', function (evt) {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
-    if (getMapPinMainCoords().y - shift.y >= DRAG_LIMIT.Y.MIN && getMapPinMainCoords().y - shift.y - PIN_SIZE.HEIGHT <= DRAG_LIMIT.Y.MAX) {
+    if (getMapPinMainCoords().y - shift.y >= DRAG_LIMIT.Y.MIN && getMapPinMainCoords().y - shift.y <= DRAG_LIMIT.Y.MAX) {
       mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
     }
     if ((getMapPinMainCoords().x - PIN_SIZE.WIDTH / 2) - shift.x >= DRAG_LIMIT.X.MIN && (getMapPinMainCoords().x + PIN_SIZE.WIDTH / 2) - shift.x <= DRAG_LIMIT.X.MAX) {
