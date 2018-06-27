@@ -254,7 +254,7 @@ var getMapPinMainCoords = function () {
 var fillAddress = function () {
   var addressInputCoords = getMapPinMainCoords();
   addressInput.value = addressInputCoords.x + ', ' + addressInputCoords.y;
-}
+};
 
 var activationForm = function () {
   map.classList.remove('map--faded');
