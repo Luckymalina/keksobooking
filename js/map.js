@@ -69,6 +69,8 @@
     WIDTH: 50,
     HEIGHT: 70
   };
+  var DEFAULT_MAIN_PIN_X = 602;
+  var DEFAULT_MAIN_PIN_Y = 407;
   var DragLimit = {
     X: {
       MIN: 0,
@@ -89,13 +91,39 @@
   var popupPhoto = template.content.querySelector('.popup__photo');
   var mapFiltersContainer = document.querySelector('.map__filters-container');
   var mapCard = document.querySelector('.map__card');
+  var mapPinMain = document.querySelector('.map__pin--main');
   var typesMap = {
     palace: 'Дворец',
     flat: 'Квартира',
     house: 'Дом',
     bungalo: 'Бунгало'
   };
-  var isActivate = false;
+  var onMapPinMainMouseDown = function () {
+    window.map.activate();
+    window.form.activate();
+    mapPinMain.removeEventListener('mousedown', onMapPinMainMouseDown);
+  };
+
+  mapPinMain.addEventListener('mousedown', onMapPinMainMouseDown);
+
+  var deactivateMap = function () {
+    map.classList.add('map--faded');
+    var mapPinsItems = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    if (mapCard) {
+      mapCard.remove();
+    }
+    for (var j = 0; j < mapPinsItems.length; j++) {
+      mapPinsItems[j].remove();
+    }
+    mapPinMain.addEventListener('mousedown', onMapPinMainMouseDown);
+  };
+
+  deactivateMap();
+
+  var activateMap = function () {
+    map.classList.remove('map--faded');
+    renderPinsMarkup(adsArr);
+  };
 
   var createAdObj = function (i) {
     var adObj = {
@@ -194,16 +222,7 @@
     return ad;
   };
 
-  window.mapPinMain.addEventListener('mouseup', function () {
-    if (!isActivate) {
-      window.map.activation();
-      window.form.activation();
-      renderPinsMarkup(adsArr);
-    }
-    window.form.fillAddress();
-  });
-
-  window.mapPinMain.addEventListener('mousedown', function (evt) {
+  mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     var startCoords = {
       x: evt.clientX,
@@ -221,22 +240,26 @@
         y: moveEvt.clientY
       };
       var mapPinMainPosition = {
-        x: window.mapPinMain.offsetLeft - shift.x,
-        y: window.mapPinMain.offsetTop - shift.y
+        x: mapPinMain.offsetLeft - shift.x,
+        y: mapPinMain.offsetTop - shift.y
       };
       var Border = {
-        TOP: DragLimit.Y.MIN - window.mapPinMain.offsetHeight,
-        BOTTOM: DragLimit.Y.MAX - window.mapPinMain.offsetHeight,
+        TOP: DragLimit.Y.MIN - mapPinMain.offsetHeight,
+        BOTTOM: DragLimit.Y.MAX - mapPinMain.offsetHeight,
         LEFT: DragLimit.X.MIN,
-        RIGHT: DragLimit.X.MAX - window.mapPinMain.offsetWidth
+        RIGHT: DragLimit.X.MAX - mapPinMain.offsetWidth
       };
       if (mapPinMainPosition.x >= Border.LEFT && mapPinMainPosition.x <= Border.RIGHT) {
-        window.mapPinMain.style.left = mapPinMainPosition.x + 'px';
+        mapPinMain.style.left = mapPinMainPosition.x + 'px';
       }
       if (mapPinMainPosition.y >= Border.TOP && mapPinMainPosition.y <= Border.BOTTOM) {
-        window.mapPinMain.style.top = mapPinMainPosition.y + 'px';
+        mapPinMain.style.top = mapPinMainPosition.y + 'px';
       }
-      window.form.fillAddress();
+      var pinTailCoords = {
+        x: mapPinMain.offsetLeft + Math.floor(mapPinMain.offsetWidth / 2),
+        y: mapPinMain.offsetTop + mapPinMain.offsetHeight
+      };
+      window.form.setAddress(pinTailCoords);
     };
 
     var onMouseUp = function (upEvt) {
@@ -250,27 +273,13 @@
   });
 
   window.map = {
-    getMapPinMainCoords: function () {
-      var mapPinMainPosition = {
-        x: window.mapPinMain.offsetLeft + Math.floor(window.mapPinMain.offsetWidth / 2),
-        y: window.mapPinMain.offsetTop + window.mapPinMain.offsetHeight
+    getMainPinDefaultCoords: function () {
+      return {
+        x: DEFAULT_MAIN_PIN_X,
+        y: DEFAULT_MAIN_PIN_Y
       };
-      return mapPinMainPosition;
     },
-    activation: function () {
-      map.classList.remove('map--faded');
-    },
-    deactivation: function () {
-      var mapPinsItems = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-      if (mapCard) {
-        mapCard.remove();
-      }
-      for (var j = 0; j < mapPinsItems.length; j++) {
-        mapPinsItems[j].remove();
-      }
-      window.mapPinMain.top = '375px';
-      window.mapPinMain.left = '570px';
-      map.classList.add('map--faded');
-    }
+    activate: activateMap,
+    deactivate: deactivateMap
   };
 })();

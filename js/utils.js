@@ -2,7 +2,6 @@
 
 (function () {
   var ESC_KEYCODE = 27;
-  window.mapPinMain = document.querySelector('.map__pin--main');
 
   window.utils = {
     getRandomFromInterval: function (min, max) {

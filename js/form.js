@@ -13,6 +13,7 @@
   var roomNumberSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
   var submitBtn = document.querySelector('.ad-form__submit');
+  var resetBtn = document.querySelector('.ad-form__reset');
   var roomsValues = {
     1: [1],
     2: [1, 2],
@@ -20,13 +21,30 @@
     100: [0]
   };
 
-  addressInput.value = Math.floor(window.mapPinMain.offsetLeft - window.mapPinMain.offsetWidth / 2) + ', ' + Math.floor(window.mapPinMain.offsetTop - window.mapPinMain.offsetHeight / 2);
+  var setAddressCoords = function (coords) {
+    addressInput.value = coords.x + ', ' + coords.y;
+  };
 
-  adFormHeader.disabled = true;
+  var activateForm = function () {
+    adForm.classList.remove('ad-form--disabled');
+    for (var i = 0; i < adFormFieldsets.length; i++) {
+      adFormFieldsets[i].removeAttribute('disabled', 'disabled');
+    }
+    adFormHeader.disabled = false;
+  };
 
-  for (var l = 0; l < adFormFieldsets.length; l++) {
-    adFormFieldsets[l].disabled = true;
-  }
+  var deactivateForm = function () {
+    adForm.reset();
+    for (var i = 0; i < adFormFieldsets.length; i++) {
+      adFormFieldsets[i].disabled = true;
+    }
+    adFormHeader.disabled = true;
+    var defaultCoords = window.map.getMainPinDefaultCoords();
+    setAddressCoords(defaultCoords);
+    adForm.classList.add('ad-form--disabled');
+  };
+
+  deactivateForm();
 
   typeInput.addEventListener('change', function (evt) {
     switch (evt.target.value) {
@@ -108,31 +126,17 @@
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     showSuccess();
-    window.map.deactivation();
-    window.form.deactivation();
+    window.map.deactivate();
+    window.form.deactivate();
+  });
+
+  resetBtn.addEventListener('click', function () {
+    adForm.reset();
   });
 
   window.form = {
-    fillAddress: function () {
-      var addressInputCoords = window.map.getMapPinMainCoords();
-      addressInput.value = addressInputCoords.x + ', ' + addressInputCoords.y;
-    },
-    activation: function () {
-      adForm.classList.remove('ad-form--disabled');
-      for (var i = 0; i < adFormFieldsets.length; i++) {
-        adFormFieldsets[i].removeAttribute('disabled', 'disabled');
-      }
-      adFormHeader.disabled = false;
-      window.form.fillAddress();
-    },
-    deactivation: function () {
-      adForm.reset();
-      for (var i = 0; i < adFormFieldsets.length; i++) {
-        adFormFieldsets[i].disabled = true;
-      }
-      adFormHeader.disabled = true;
-      addressInput.value = Math.floor(window.mapPinMain.offsetLeft - window.mapPinMain.offsetWidth / 2) + ', ' + Math.floor(window.mapPinMain.offsetTop - window.mapPinMain.offsetHeight / 2);
-      adForm.classList.add('ad-form--disabled');
-    }
+    setAddress: setAddressCoords,
+    activate: activateForm,
+    deactivate: deactivateForm
   };
 })();
