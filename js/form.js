@@ -28,7 +28,7 @@
   var activateForm = function () {
     adForm.classList.remove('ad-form--disabled');
     for (var i = 0; i < adFormFieldsets.length; i++) {
-      adFormFieldsets[i].removeAttribute('disabled', 'disabled');
+      adFormFieldsets[i].disabled = false;
     }
     adFormHeader.disabled = false;
   };
@@ -131,7 +131,9 @@
   });
 
   resetBtn.addEventListener('click', function () {
-    adForm.reset();
+    window.map.deactivate();
+    window.form.deactivate();
+
   });
 
   window.form = {

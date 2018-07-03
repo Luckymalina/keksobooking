@@ -65,12 +65,13 @@
       }
     }
   };
-  var PIN_SIZE = {
-    WIDTH: 50,
-    HEIGHT: 70
+  var PinSize = {
+    WIDTH: 65,
+    HEIGHT: 65,
   };
-  var DEFAULT_MAIN_PIN_X = 602;
-  var DEFAULT_MAIN_PIN_Y = 407;
+  var TAIL_HEIGHT = 16;
+  var DEFAULT_MAIN_PIN_X = 601;
+  var DEFAULT_MAIN_PIN_Y = 404;
   var DragLimit = {
     X: {
       MIN: 0,
@@ -143,8 +144,8 @@
         photos: window.utils.randomShuffleArr(OffersOptions.PHOTOS)
       },
       location: {
-        x: window.utils.getRandomFromInterval(OffersOptions.LOCATION.X.MIN, OffersOptions.LOCATION.X.MAX) - PIN_SIZE.WIDTH / 2,
-        y: window.utils.getRandomFromInterval(OffersOptions.LOCATION.Y.MIN, OffersOptions.LOCATION.Y.MAX) - PIN_SIZE.HEIGHT
+        x: window.utils.getRandomFromInterval(OffersOptions.LOCATION.X.MIN, OffersOptions.LOCATION.X.MAX) - PinSize.WIDTH / 2,
+        y: window.utils.getRandomFromInterval(OffersOptions.LOCATION.Y.MIN, OffersOptions.LOCATION.Y.MAX) - PinSize.HEIGHT
       }
     };
     adObj.offer.address = adObj.location.x + ', ' + adObj.location.y;
@@ -256,8 +257,8 @@
         mapPinMain.style.top = mapPinMainPosition.y + 'px';
       }
       var pinTailCoords = {
-        x: mapPinMain.offsetLeft + Math.floor(mapPinMain.offsetWidth / 2),
-        y: mapPinMain.offsetTop + mapPinMain.offsetHeight
+        x: mapPinMainPosition.x + Math.ceil(PinSize.WIDTH / 2),
+        y: mapPinMainPosition.x + PinSize.HEIGHT + TAIL_HEIGHT
       };
       window.form.setAddress(pinTailCoords);
     };
