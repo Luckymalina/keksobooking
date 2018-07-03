@@ -51,6 +51,8 @@
     for (var j = 0; j < mapPinsItems.length; j++) {
       mapPinsItems[j].remove();
     }
+    mapPinMain.style.top = DEFAULT_MAIN_PIN_Y - PinSize.HEIGHT / 2 + 'px';
+    mapPinMain.style.left = DEFAULT_MAIN_PIN_X - PinSize.WIDTH / 2 + 'px';
     mapPinMain.addEventListener('mousedown', onMapPinMainMouseDown);
   };
 
