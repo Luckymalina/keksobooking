@@ -245,8 +245,8 @@
         y: mapPinMain.offsetTop - shift.y
       };
       var Border = {
-        TOP: DragLimit.Y.MIN - mapPinMain.offsetHeight,
-        BOTTOM: DragLimit.Y.MAX - mapPinMain.offsetHeight,
+        TOP: DragLimit.Y.MIN - mapPinMain.offsetHeight - TAIL_HEIGHT,
+        BOTTOM: DragLimit.Y.MAX - mapPinMain.offsetHeight - TAIL_HEIGHT,
         LEFT: DragLimit.X.MIN,
         RIGHT: DragLimit.X.MAX - mapPinMain.offsetWidth
       };
