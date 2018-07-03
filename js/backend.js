@@ -5,47 +5,38 @@
     LOAD: 'https://js.dump.academy/keksobooking/data',
     UPLOAD: 'https://js.dump.academy/keksobooking'
   };
-  var load = function (onLoad, onError) {
+  var MessageText = {
+    ERROR_LOAD: 'Произошла неизвестная ошибка. Пожалуйста, обновите страницу.',
+    ERROR_SERVER: 'Произошла ошибка соединения. Пожалуйста, обновите страницу.',
+    ERROR_TIMEOUT: 'Сервер долго не отвечает. Пожалуйста, обновите страницу.'
+  };
+  var createXhr = function (method, url, onLoad, onError, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
         onLoad(xhr.response);
       } else {
-        onError('Произошла неизвестная ошибка. Пожалуйста, обновите страницу.');
+        onError(MessageText.ERROR_LOAD);
       }
     });
     xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения. Пожалуйста, обновите страницу.');
+      onError(MessageText.ERROR_SERVER);
     });
     xhr.addEventListener('timeout', function () {
-      onError('Сервер долго не отвечает. Пожалуйста, обновите страницу.');
+      onError(MessageText.ERROR_TIMEOUT);
     });
-    xhr.open('GET', ServerUrl.LOAD);
-    xhr.send();
+    xhr.open(method, url);
+    xhr.send(data ? data : '');
+  };
+  var load = function (onLoad, onError) {
+    createXhr('GET', ServerUrl.LOAD, onLoad, onError);
   };
   var upload = function (onLoad, onError, data) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onLoad(xhr.response);
-      } else {
-        onError('Произошла неизвестная ошибка. Пожалуйста, обновите страницу.');
-      }
-    });
-    xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения. Пожалуйста, обновите страницу.');
-    });
-    xhr.addEventListener('timeout', function () {
-      onError('Сервер долго не отвечает. Пожалуйста, обновите страницу.');
-    });
-    xhr.open('GET', ServerUrl.UPLOAD);
-    xhr.send(data);
+    createXhr('POST', ServerUrl.UPLOAD, onLoad, onError, data);
   };
   window.backend = {
     load: load,
     upload: upload
   };
 })();
-
