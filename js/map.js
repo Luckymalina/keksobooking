@@ -258,7 +258,7 @@
       }
       var pinTailCoords = {
         x: mapPinMainPosition.x + Math.ceil(PinSize.WIDTH / 2),
-        y: mapPinMainPosition.x + PinSize.HEIGHT + TAIL_HEIGHT
+        y: mapPinMainPosition.y + PinSize.HEIGHT + TAIL_HEIGHT
       };
       window.form.setAddress(pinTailCoords);
     };
