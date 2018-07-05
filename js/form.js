@@ -130,7 +130,7 @@
   };
 
   var onSubmitError = function (errorMessage) {
-    window.renderErrorMessage(errorMessage);
+    window.utils.renderErrorMessage(errorMessage);
   };
 
   adForm.addEventListener('submit', function (evt) {

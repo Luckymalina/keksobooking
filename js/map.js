@@ -63,7 +63,7 @@
   };
 
   var onLoadError = function (errorMessage) {
-    window.renderErrorMessage(errorMessage);
+    window.utils.renderErrorMessage(errorMessage);
   };
 
   var activateMap = function () {
