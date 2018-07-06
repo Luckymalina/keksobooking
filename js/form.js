@@ -123,11 +123,20 @@
     });
   };
 
-  adForm.addEventListener('submit', function (evt) {
-    evt.preventDefault();
+  var onSubmitSuccess = function () {
     showSuccess();
     window.map.deactivate();
     window.form.deactivate();
+  };
+
+  var onSubmitError = function (errorMessage) {
+    window.utils.renderErrorMessage(errorMessage);
+  };
+
+  adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    var formData = new FormData(adForm);
+    window.backend.upload(onSubmitSuccess, onSubmitError, formData);
   });
 
   resetBtn.addEventListener('click', function () {
