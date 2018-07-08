@@ -72,13 +72,25 @@
     filterItems.forEach(function (it) {
       it.disabled = false;
     });
+    onFilterChange();
     filter.addEventListener('change', onFilterChange);
+  };
+
+  var resetFilter = function () {
+    filterItems.forEach(function (it) {
+      it.value = 'any';
+    });
+    var featuresItems = featuresFieldset.querySelectorAll('input');
+    featuresItems.forEach(function (feature) {
+      feature.checked = false;
+    });
   };
 
   var deactivateFilter = function () {
     filterItems.forEach(function (it) {
       it.disabled = true;
     });
+    resetFilter();
     filter.removeEventListener('change', onFilterChange);
   };
 
@@ -90,7 +102,6 @@
 
   var deactivateFiltration = function () {
     deactivateFilter();
-    filter.reset();
   };
 
   window.filter = {

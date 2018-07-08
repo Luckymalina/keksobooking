@@ -127,6 +127,7 @@
     showSuccess();
     window.map.deactivate();
     window.form.deactivate();
+    window.filter.deactivate();
   };
 
   var onSubmitError = function (errorMessage) {
@@ -142,7 +143,7 @@
   resetBtn.addEventListener('click', function () {
     window.map.deactivate();
     window.form.deactivate();
-
+    window.filter.deactivate();
   });
 
   window.form = {
