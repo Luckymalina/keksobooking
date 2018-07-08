@@ -2,6 +2,7 @@
 
 (function () {
   var ESC_KEYCODE = 27;
+  var DEBOUNCE_INTERVAL = 300;
 
   var getRandomFromInterval = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -42,13 +43,27 @@
     document.body.insertAdjacentElement('afterbegin', message);
   };
 
+  var debounce = function (fun) {
+    var lastTimeout = null;
+    return function () {
+      var args = arguments;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        fun.apply(null, args);
+      }, DEBOUNCE_INTERVAL);
+    };
+  };
+
   window.utils = {
     getRandomFromInterval: getRandomFromInterval,
     randomShuffleArr: randomShuffleArr,
     randomCutArr: randomCutArr,
     isEscKeyCode: isEscKeyCode,
     onEscDown: onEscDown,
-    renderErrorMessage: renderErrorMessage
+    renderErrorMessage: renderErrorMessage,
+    debounce: debounce
   };
 })();
 
