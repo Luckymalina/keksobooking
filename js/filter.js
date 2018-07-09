@@ -4,15 +4,15 @@
   var PINS_LIMIT = 5;
 
   var PriceRange = {
-    low: {
+    LOW: {
       MIN: 0,
       MAX: 10000
     },
-    middle: {
+    MIDDLE: {
       MIN: 10000,
       MAX: 50000
     },
-    high: {
+    HIGH: {
       MIN: 50000,
       MAX: Infinity
     }
@@ -37,7 +37,7 @@
   };
 
   var filtrationByPrice = function (item) {
-    var filteringPrice = PriceRange[priceSelect.value];
+    var filteringPrice = PriceRange[priceSelect.value.toUpperCase()];
     return filteringPrice ? item.offer.price >= filteringPrice.MIN && item.offer.price <= filteringPrice.MAX : true;
   };
 
