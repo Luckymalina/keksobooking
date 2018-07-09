@@ -57,7 +57,7 @@
   };
 
   var onFilterChange = window.utils.debounce(function () {
-    filteredData = data.slice();
+    filteredData = data.slice(0);
     filteredData = filteredData.filter(filtrationByType);
     filteredData = filteredData.filter(filtrationByPrice);
     filteredData = filteredData.filter(filtrationByRooms);
@@ -95,7 +95,7 @@
   };
 
   var activateFiltration = function (adData) {
-    data = adData.slice();
+    data = adData.slice(0);
     activateFilter();
     return adData.slice(0, PINS_LIMIT);
   };
