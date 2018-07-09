@@ -58,11 +58,7 @@
 
   var onFilterChange = window.utils.debounce(function () {
     filteredData = data.slice(0);
-    filteredData = filteredData.filter(filtrationByType);
-    filteredData = filteredData.filter(filtrationByPrice);
-    filteredData = filteredData.filter(filtrationByRooms);
-    filteredData = filteredData.filter(filtrationByGuests);
-    filteredData = filteredData.filter(filtrationByFeatures);
+    filteredData = filteredData.filter(filtrationByType).filter(filtrationByPrice).filter(filtrationByRooms).filter(filtrationByGuests).filter(filtrationByFeatures);
     window.map.removePins();
     window.map.removeMapCard();
     window.map.renderPinsMarkup(filteredData.slice(0, PINS_LIMIT));
