@@ -26,7 +26,6 @@
   var adTemplate = template.content.querySelector('.map__card');
   var popupPhoto = template.content.querySelector('.popup__photo');
   var mapFiltersContainer = document.querySelector('.map__filters-container');
-  var mapCard = document.querySelector('.map__card');
   var mapPinMain = document.querySelector('.map__pin--main');
 
   var TypesMap = {
@@ -50,6 +49,7 @@
   };
 
   var removeMapCard = function () {
+    var mapCard = document.querySelector('.map__card');
     if (mapCard) {
       mapCard.remove();
     }
