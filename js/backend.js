@@ -10,6 +10,7 @@
     ERROR_SERVER: 'Произошла ошибка соединения. Пожалуйста, обновите страницу.',
     ERROR_TIMEOUT: 'Сервер долго не отвечает. Пожалуйста, обновите страницу.'
   };
+
   var createXhr = function (method, url, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -29,12 +30,15 @@
     xhr.open(method, url);
     return xhr;
   };
+
   var load = function (onLoad, onError) {
     createXhr('GET', ServerUrl.LOAD, onLoad, onError).send();
   };
+
   var upload = function (onLoad, onError, data) {
     createXhr('POST', ServerUrl.UPLOAD, onLoad, onError).send(data);
   };
+
   window.backend = {
     load: load,
     upload: upload

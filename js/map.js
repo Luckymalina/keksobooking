@@ -26,31 +26,39 @@
   var adTemplate = template.content.querySelector('.map__card');
   var popupPhoto = template.content.querySelector('.popup__photo');
   var mapFiltersContainer = document.querySelector('.map__filters-container');
-  var mapCard = document.querySelector('.map__card');
   var mapPinMain = document.querySelector('.map__pin--main');
-  var typesMap = {
+
+  var TypesMap = {
     palace: 'Дворец',
     flat: 'Квартира',
     house: 'Дом',
     bungalo: 'Бунгало'
   };
+
   var onMapPinMainMouseDown = function () {
-    window.map.activate();
+    activateMap();
     window.form.activate();
     mapPinMain.removeEventListener('mousedown', onMapPinMainMouseDown);
   };
 
-  mapPinMain.addEventListener('mousedown', onMapPinMainMouseDown);
-
-  var deactivateMap = function () {
-    map.classList.add('map--faded');
+  var removePins = function () {
     var mapPinsItems = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    if (mapCard) {
-      mapCard.remove();
-    }
     for (var j = 0; j < mapPinsItems.length; j++) {
       mapPinsItems[j].remove();
     }
+  };
+
+  var removeMapCard = function () {
+    var mapCard = document.querySelector('.map__card');
+    if (mapCard) {
+      mapCard.remove();
+    }
+  };
+
+  var deactivateMap = function () {
+    map.classList.add('map--faded');
+    removePins();
+    removeMapCard();
     mapPinMain.style.top = DEFAULT_MAIN_PIN_Y - PinSize.HEIGHT / 2 + 'px';
     mapPinMain.style.left = DEFAULT_MAIN_PIN_X - PinSize.WIDTH / 2 + 'px';
     mapPinMain.addEventListener('mousedown', onMapPinMainMouseDown);
@@ -59,7 +67,7 @@
   deactivateMap();
 
   var onLoadSuccess = function (adData) {
-    renderPinsMarkup(adData);
+    window.filter.activate(adData);
   };
 
   var onLoadError = function (errorMessage) {
@@ -121,7 +129,7 @@
     ad.querySelector('.map__card img').src = adData.author.avatar;
     ad.querySelector('.popup__title').textContent = adData.offer.title;
     ad.querySelector('.popup__text--price').textContent = adData.offer.price + ' ₽/ночь';
-    ad.querySelector('.popup__type').textContent = typesMap[adData.offer.type];
+    ad.querySelector('.popup__type').textContent = TypesMap[adData.offer.type];
     ad.querySelector('.popup__text--capacity').textContent = adData.offer.rooms + ' комнаты для ' + adData.offer.guests + ' гостей';
     ad.querySelector('.popup__text--time').textContent = 'Заезд после ' + adData.offer.checkin + ', выезд до ' + adData.offer.checkout;
     ad.querySelector('.popup__features').innerHTML = '';
@@ -188,14 +196,18 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+  var getMainPinDefaultCoords = function () {
+    return {
+      x: DEFAULT_MAIN_PIN_X,
+      y: DEFAULT_MAIN_PIN_Y
+    };
+  };
+
   window.map = {
-    getMainPinDefaultCoords: function () {
-      return {
-        x: DEFAULT_MAIN_PIN_X,
-        y: DEFAULT_MAIN_PIN_Y
-      };
-    },
-    activate: activateMap,
-    deactivate: deactivateMap
+    getMainPinDefaultCoords: getMainPinDefaultCoords,
+    deactivate: deactivateMap,
+    removePins: removePins,
+    removeMapCard: removeMapCard,
+    renderPinsMarkup: renderPinsMarkup
   };
 })();
