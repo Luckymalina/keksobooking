@@ -5,6 +5,7 @@
     LOAD: 'https://js.dump.academy/keksobooking/data',
     UPLOAD: 'https://js.dump.academy/keksobooking'
   };
+
   var MessageText = {
     ERROR_LOAD: 'Произошла неизвестная ошибка. Пожалуйста, обновите страницу.',
     ERROR_SERVER: 'Произошла ошибка соединения. Пожалуйста, обновите страницу.',
