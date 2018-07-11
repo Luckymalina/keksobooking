@@ -26,6 +26,8 @@
   var adTemplate = template.content.querySelector('.map__card');
   var popupPhoto = template.content.querySelector('.popup__photo');
   var mapFiltersContainer = document.querySelector('.map__filters-container');
+  var mapFiltersSelects = document.querySelectorAll('.map__filter');
+  var mapFiltersfieldset = document.querySelector('#housing-features');
   var mapPinMain = document.querySelector('.map__pin--main');
 
   var TypesMap = {
@@ -55,6 +57,20 @@
     }
   };
 
+  var activateFilter = function () {
+    mapFiltersSelects.forEach(function (it) {
+      it.disabled = 'true';
+    });
+    mapFiltersfieldset.disabled = 'true';
+  };
+
+  var deactivateFilter = function () {
+    mapFiltersSelects.forEach(function (it) {
+      it.disabled = 'false';
+    });
+    mapFiltersfieldset.disabled = 'false';
+  };
+
   var deactivateMap = function () {
     map.classList.add('map--faded');
     removePins();
@@ -62,6 +78,7 @@
     mapPinMain.style.top = DEFAULT_MAIN_PIN_Y - PinSize.HEIGHT / 2 + 'px';
     mapPinMain.style.left = DEFAULT_MAIN_PIN_X - PinSize.WIDTH / 2 + 'px';
     mapPinMain.addEventListener('mousedown', onMapPinMainMouseDown);
+    deactivateFilter();
   };
 
   deactivateMap();
@@ -77,6 +94,7 @@
   var activateMap = function () {
     window.backend.load(onLoadSuccess, onLoadError);
     map.classList.remove('map--faded');
+    activateFilter();
   };
 
   var createPinMarkup = function (pinData) {
