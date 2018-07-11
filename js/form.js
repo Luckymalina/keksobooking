@@ -1,11 +1,19 @@
 'use strict';
 
 (function () {
+  var RoomsValues = {
+    1: [1],
+    2: [1, 2],
+    3: [1, 2, 3],
+    100: [0]
+  };
+
   var adForm = document.querySelector('.ad-form');
   var adFormFieldsets = document.querySelectorAll('.ad-form__element');
   var adFormHeader = document.querySelector('.ad-form-header');
   var addressInput = document.querySelector('#address');
   var success = document.querySelector('.success');
+  var titleInput = document.querySelector('#title');
   var typeInput = document.querySelector('#type');
   var priceInput = document.querySelector('#price');
   var timeInInput = document.querySelector('#timein');
@@ -14,12 +22,7 @@
   var capacitySelect = document.querySelector('#capacity');
   var submitBtn = document.querySelector('.ad-form__submit');
   var resetBtn = document.querySelector('.ad-form__reset');
-  var roomsValues = {
-    1: [1],
-    2: [1, 2],
-    3: [1, 2, 3],
-    100: [0]
-  };
+  var invalidElements = [];
 
   var setAddressCoords = function (coords) {
     addressInput.value = coords.x + ', ' + coords.y;
@@ -32,6 +35,9 @@
     }
     adFormHeader.disabled = false;
     window.loadImage.activate();
+    adForm.addEventListener('invalid', onFormInvalid, true);
+    priceInput.addEventListener('change', onElementCheckValidity);
+    titleInput.addEventListener('change', onElementCheckValidity);
   };
 
   var deactivateForm = function () {
@@ -45,6 +51,7 @@
     adForm.classList.add('ad-form--disabled');
     window.loadImage.deactivate();
     window.loadImage.remove();
+    adForm.removeEventListener('invalid', onFormInvalid, true);
   };
 
   deactivateForm();
@@ -83,9 +90,9 @@
     for (var t = 0; t < capacityOptions.length; t++) {
       capacityOptions[t].disabled = true;
     }
-    for (var i = 0; i < roomsValues[inputValue].length; i++) {
-      capacitySelect.querySelector('option' + '[value="' + roomsValues[inputValue][i] + '"]').disabled = false;
-      capacitySelect.value = roomsValues[inputValue][i];
+    for (var i = 0; i < RoomsValues[inputValue].length; i++) {
+      capacitySelect.querySelector('option' + '[value="' + RoomsValues[inputValue][i] + '"]').disabled = false;
+      capacitySelect.value = RoomsValues[inputValue][i];
     }
   };
 
@@ -93,8 +100,30 @@
     disableСapacityOptions(roomNumberSelect.value);
   });
 
+  var highlightInvalidElement = function (item) {
+    invalidElements.push(item);
+    item.classList.add('invalid-element');
+  };
+
+  var unhighlightInvalidElement = function (item) {
+    invalidElements.splice(invalidElements.indexOf(item), 1);
+    item.classList.remove('invalid-element');
+  };
+
+  var onFormInvalid = function (evt) {
+    highlightInvalidElement(evt.target);
+  };
+
+  var onElementCheckValidity = function (evt) {
+    if (!evt.target.checkValidity()) {
+      highlightInvalidElement(evt.target);
+    } else if (invalidElements.indexOf(evt.target) !== 1) {
+      unhighlightInvalidElement(evt.target);
+    }
+  };
+
   var checkPlaceValidity = function () {
-    var roomGuests = roomsValues[roomNumberSelect.value];
+    var roomGuests = RoomsValues[roomNumberSelect.value];
     if (roomGuests.indexOf(+capacitySelect.value) === -1) {
       capacitySelect.setCustomValidity('Количество гостей не влезут в выбранную комнату');
     } else {
