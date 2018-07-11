@@ -31,6 +31,7 @@
       adFormFieldsets[i].disabled = false;
     }
     adFormHeader.disabled = false;
+    window.loadImage.activate();
   };
 
   var deactivateForm = function () {
@@ -42,6 +43,7 @@
     var defaultCoords = window.map.getMainPinDefaultCoords();
     setAddressCoords(defaultCoords);
     adForm.classList.add('ad-form--disabled');
+    window.loadImage.deactivate();
   };
 
   deactivateForm();
@@ -144,6 +146,7 @@
     window.map.deactivate();
     window.form.deactivate();
     window.filter.deactivate();
+    window.loadImage.remove();
   });
 
   window.form = {
