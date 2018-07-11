@@ -44,6 +44,7 @@
     setAddressCoords(defaultCoords);
     adForm.classList.add('ad-form--disabled');
     window.loadImage.deactivate();
+    window.loadImage.remove();
   };
 
   deactivateForm();
