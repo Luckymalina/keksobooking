@@ -136,12 +136,14 @@
     ad.querySelector('.popup__photos').appendChild(createPhotosFragment(adData));
     mapFiltersContainer.insertAdjacentElement('beforebegin', ad);
     var closeAd = ad.querySelector('.popup__close');
-    closeAd.addEventListener('click', function () {
+    var onCloseAdClick = function () {
       ad.remove();
-    });
-    document.addEventListener('keydown', function (evt) {
+    };
+    closeAd.addEventListener('click', onCloseAdClick);
+    var onEscDownCloseAd = function (evt) {
       window.utils.onEscDown(evt, ad);
-    });
+    };
+    document.addEventListener('keydown', onEscDownCloseAd);
     return ad;
   };
 

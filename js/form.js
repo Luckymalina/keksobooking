@@ -114,14 +114,16 @@
 
   var showSuccess = function () {
     success.classList.remove('hidden');
-    success.addEventListener('keydown', function (evt) {
+    var onSuccessEscDown = function (evt) {
       if (window.utils.isEscKeyCode(evt)) {
         success.classList.add('hidden');
       }
-    });
-    document.addEventListener('click', function () {
+    };
+    success.addEventListener('keydown', onSuccessEscDown);
+    var onClickHideSuccess = function () {
       success.classList.add('hidden');
-    });
+    };
+    document.addEventListener('click', onClickHideSuccess);
   };
 
   var onSubmitSuccess = function () {
