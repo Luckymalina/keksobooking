@@ -126,8 +126,8 @@
 
   var onSubmitSuccess = function () {
     showSuccess();
+    deactivateForm();
     window.map.deactivate();
-    window.form.deactivate();
     window.filter.deactivate();
   };
 
@@ -141,9 +141,10 @@
     window.backend.upload(onSubmitSuccess, onSubmitError, formData);
   };
 
-  var onResetBtnClick = function () {
+  var onResetBtnClick = function (evt) {
+    evt.preventDefault();
+    deactivateForm();
     window.map.deactivate();
-    window.form.deactivate();
     window.filter.deactivate();
     window.loadImage.remove();
   };
@@ -192,11 +193,10 @@
       adFormFieldsets[i].disabled = true;
     }
     adFormHeader.disabled = true;
-    var defaultCoords = window.map.getMainPinDefaultCoords();
-    setAddressCoords(defaultCoords);
     adForm.classList.add('ad-form--disabled');
     window.loadImage.deactivate();
     window.loadImage.remove();
+    setAddressCoords(window.map.getMainPinDefaultCoords());
     removeFormListeners();
   };
 
@@ -204,7 +204,6 @@
 
   window.form = {
     setAddress: setAddressCoords,
-    activate: activateForm,
-    deactivate: deactivateForm
+    activate: activateForm
   };
 })();
