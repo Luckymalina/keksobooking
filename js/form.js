@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var RoomsValues = {
+  var RoomGuestRation = {
     1: [1],
     2: [1, 2],
     3: [1, 2, 3],
@@ -62,9 +62,9 @@
     for (var t = 0; t < capacityOptions.length; t++) {
       capacityOptions[t].disabled = true;
     }
-    for (var i = 0; i < RoomsValues[inputValue].length; i++) {
-      capacitySelect.querySelector('option' + '[value="' + RoomsValues[inputValue][i] + '"]').disabled = false;
-      capacitySelect.value = RoomsValues[inputValue][i];
+    for (var i = 0; i < RoomGuestRation[inputValue].length; i++) {
+      capacitySelect.querySelector('option' + '[value="' + RoomGuestRation[inputValue][i] + '"]').disabled = false;
+      capacitySelect.value = RoomGuestRation[inputValue][i];
     }
   };
 
@@ -91,7 +91,7 @@
   };
 
   var checkPlaceValidity = function () {
-    var roomGuests = RoomsValues[roomNumberSelect.value];
+    var roomGuests = RoomGuestRation[roomNumberSelect.value];
     if (roomGuests.indexOf(+capacitySelect.value) === -1) {
       capacitySelect.setCustomValidity('Количество гостей не влезут в выбранную комнату');
     } else {
