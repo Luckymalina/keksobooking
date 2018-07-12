@@ -1217,6 +1217,10 @@ fieldset {
           transform: translateX(-50%);
 }
 
+.ad-form__element input.invalid-element {
+  border: 1px solid red;
+}
+
 .error-message {
   color: #fff;
   z-index: 100;
