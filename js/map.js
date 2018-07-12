@@ -88,7 +88,6 @@
         mapCardRemovable.remove();
       }
       createAd(pinData);
-      document.addEventListener('keydown', window.utils.onEscDown);
     };
     pinItem.addEventListener('click', onPinItemClick);
     return pinItem;
@@ -137,11 +136,12 @@
     ad.querySelector('.popup__photos').appendChild(createPhotosFragment(adData));
     mapFiltersContainer.insertAdjacentElement('beforebegin', ad);
     var closeAd = ad.querySelector('.popup__close');
-    var onCloseAdClick = function () {
+    closeAd.addEventListener('click', function () {
       ad.remove();
-      document.removeEventListener('click', window.utils.onEscDown);
-    };
-    closeAd.addEventListener('click', onCloseAdClick);
+    });
+    document.addEventListener('keydown', function (evt) {
+      window.utils.onEscDown(evt, ad);
+    });
     return ad;
   };
 
