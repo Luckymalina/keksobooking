@@ -120,10 +120,10 @@
       }
     };
     success.addEventListener('keydown', onSuccessEscDown);
-    var onClickHideSuccess = function () {
+    var onSuccessClick = function () {
       success.classList.add('hidden');
     };
-    document.addEventListener('click', onClickHideSuccess);
+    success.addEventListener('click', onSuccessClick);
   };
 
   var onSubmitSuccess = function () {

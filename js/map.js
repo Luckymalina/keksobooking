@@ -135,15 +135,18 @@
     ad.querySelector('.popup__photos').removeChild(ad.querySelector('.popup__photo'));
     ad.querySelector('.popup__photos').appendChild(createPhotosFragment(adData));
     mapFiltersContainer.insertAdjacentElement('beforebegin', ad);
-    var closeAd = ad.querySelector('.popup__close');
-    var onCloseAdClick = function () {
+    var closeAdBtn = ad.querySelector('.popup__close');
+    var closeAd = function () {
       ad.remove();
     };
-    closeAd.addEventListener('click', onCloseAdClick);
-    var onEscDownCloseAd = function (evt) {
-      window.utils.onEscDown(evt, ad);
+    var onCloseAdBtnClick = function () {
+      closeAd();
     };
-    document.addEventListener('keydown', onEscDownCloseAd);
+    closeAdBtn.addEventListener('click', onCloseAdBtnClick);
+    var onAdEscDown = function (evt) {
+      window.utils.onEscDown(evt, closeAd);
+    };
+    document.addEventListener('keydown', onAdEscDown);
     return ad;
   };
 

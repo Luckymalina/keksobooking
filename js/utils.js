@@ -8,9 +8,9 @@
     return evt.keyCode === ESC_KEYCODE;
   };
 
-  var onEscDown = function (evt, popup) {
+  var onEscDown = function (evt, func) {
     if (evt.keyCode === ESC_KEYCODE) {
-      popup.remove();
+      func();
     }
   };
 
