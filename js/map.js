@@ -36,7 +36,7 @@
   var popupPhoto = template.content.querySelector('.popup__photo');
   var mapFiltersContainer = document.querySelector('.map__filters-container');
   var mapFiltersSelects = document.querySelectorAll('.map__filter');
-  var mapFiltersfieldset = document.querySelector('#housing-features');
+  var mapFiltersFieldset = document.querySelector('#housing-features');
   var mainPin = document.querySelector('.map__pin--main');
   var activePage = false;
 
@@ -56,16 +56,16 @@
 
   var activateFilter = function () {
     mapFiltersSelects.forEach(function (it) {
-      it.disabled = 'true';
+      it.disabled = false;
     });
-    mapFiltersfieldset.disabled = 'true';
+    mapFiltersFieldset.disabled = false;
   };
 
   var deactivateFilter = function () {
     mapFiltersSelects.forEach(function (it) {
-      it.disabled = 'false';
+      it.disabled = true;
     });
-    mapFiltersfieldset.disabled = 'false';
+    mapFiltersFieldset.disabled = true;
   };
 
   var onLoadSuccess = function (adData) {
