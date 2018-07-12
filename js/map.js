@@ -42,9 +42,9 @@
 
   var removePins = function () {
     var mapPinsItems = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    for (var j = 0; j < mapPinsItems.length; j++) {
-      mapPinsItems[j].remove();
-    }
+    mapPinsItems.forEach(function (it) {
+      it.remove();
+    });
   };
 
   var removeMapCard = function () {
@@ -95,29 +95,29 @@
 
   var renderPinsMarkup = function (pinsData) {
     var mapPinsFragment = document.createDocumentFragment();
-    for (var j = 0; j < pinsData.length; j++) {
-      mapPinsFragment.appendChild(createPinMarkup(pinsData[j]));
-    }
+    pinsData.forEach(function (it) {
+      mapPinsFragment.appendChild(createPinMarkup(it));
+    });
     mapPins.appendChild(mapPinsFragment);
   };
 
   var createFeatureFragment = function (adData) {
     var featureFragment = document.createDocumentFragment();
-    for (var j = 0; j < adData.offer.features.length; j++) {
+    adData.offer.features.forEach(function (it) {
       var featureItem = document.createElement('li');
-      featureItem.className = 'popup__feature popup__feature--' + adData.offer.features[j];
+      featureItem.className = 'popup__feature popup__feature--' + it;
       featureFragment.appendChild(featureItem);
-    }
+    });
     return featureFragment;
   };
 
   var createPhotosFragment = function (adData) {
     var photosFragment = document.createDocumentFragment();
-    for (var t = 0; t < adData.offer.photos.length; t++) {
+    adData.offer.photos.forEach(function (it) {
       var popupPhotoItem = popupPhoto.cloneNode(true);
-      popupPhotoItem.src = adData.offer.photos[t];
+      popupPhotoItem.src = it;
       photosFragment.appendChild(popupPhotoItem);
-    }
+    });
     return photosFragment;
   };
 

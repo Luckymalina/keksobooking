@@ -59,13 +59,13 @@
 
   var disableСapacityOptions = function (inputValue) {
     var capacityOptions = capacitySelect.querySelectorAll('option');
-    for (var t = 0; t < capacityOptions.length; t++) {
-      capacityOptions[t].disabled = true;
-    }
-    for (var i = 0; i < RoomGuestRation[inputValue].length; i++) {
-      capacitySelect.querySelector('option' + '[value="' + RoomGuestRation[inputValue][i] + '"]').disabled = false;
-      capacitySelect.value = RoomGuestRation[inputValue][i];
-    }
+    capacityOptions.forEach(function (it) {
+      it.disabled = true;
+    });
+    RoomGuestRation[inputValue].forEach(function (it) {
+      capacitySelect.querySelector('option' + '[value="' + it + '"]').disabled = false;
+      capacitySelect.value = it;
+    });
   };
 
   var highlightInvalidElement = function (item) {
@@ -179,9 +179,9 @@
 
   var activateForm = function () {
     adForm.classList.remove('ad-form--disabled');
-    for (var i = 0; i < adFormFieldsets.length; i++) {
-      adFormFieldsets[i].disabled = false;
-    }
+    adFormFieldsets.forEach(function (it) {
+      it.disabled = false;
+    });
     adFormHeader.disabled = false;
     window.loadImage.activate();
     addFormListeners();
@@ -189,9 +189,9 @@
 
   var deactivateForm = function () {
     adForm.reset();
-    for (var i = 0; i < adFormFieldsets.length; i++) {
-      adFormFieldsets[i].disabled = true;
-    }
+    adFormFieldsets.forEach(function (it) {
+      it.disabled = true;
+    });
     adFormHeader.disabled = true;
     adForm.classList.add('ad-form--disabled');
     window.loadImage.deactivate();

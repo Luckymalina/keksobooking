@@ -58,12 +58,12 @@
   var loadFile = function (chooser, func) {
     var files = Array.from(chooser.files).filter(filtrationByCorrectType);
     if (files) {
-      files.forEach(function (item) {
+      files.forEach(function (it) {
         var reader = new FileReader();
         reader.addEventListener('load', function (evt) {
           func(evt.target.result);
         });
-        reader.readAsDataURL(item);
+        reader.readAsDataURL(it);
       });
     }
   };
