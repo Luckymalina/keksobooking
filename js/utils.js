@@ -4,10 +4,6 @@
   var ESC_KEYCODE = 27;
   var DEBOUNCE_INTERVAL = 300;
 
-  var isEscKeyCode = function (evt) {
-    return evt.keyCode === ESC_KEYCODE;
-  };
-
   var onEscDown = function (evt, func) {
     if (evt.keyCode === ESC_KEYCODE) {
       func();
@@ -35,7 +31,6 @@
   };
 
   window.utils = {
-    isEscKeyCode: isEscKeyCode,
     onEscDown: onEscDown,
     renderErrorMessage: renderErrorMessage,
     debounce: debounce

@@ -111,17 +111,18 @@
   var onSubmitBtnClick = function () {
     checkPlaceValidity();
   };
+  var closeSuccess = function () {
+    success.classList.add('hidden');
+  };
 
   var showSuccess = function () {
     success.classList.remove('hidden');
     var onSuccessEscDown = function (evt) {
-      if (window.utils.isEscKeyCode(evt)) {
-        success.classList.add('hidden');
-      }
+      window.utils.onEscDown(evt, closeSuccess);
     };
     success.addEventListener('keydown', onSuccessEscDown);
     var onSuccessClick = function () {
-      success.classList.add('hidden');
+      closeSuccess();
     };
     success.addEventListener('click', onSuccessClick);
   };
