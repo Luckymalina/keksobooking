@@ -2,8 +2,8 @@
 
 (function () {
   var TAIL_HEIGHT = 16;
-  var DEFAULT_MAIN_PIN_X = 601;
-  var DEFAULT_MAIN_PIN_Y = 404;
+  var DEFAULT_MAIN_PIN_X = 600;
+  var DEFAULT_MAIN_PIN_Y = 375;
 
   var PinSize = {
     WIDTH: 65,
