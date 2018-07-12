@@ -126,7 +126,7 @@
     ad.querySelector('.map__card img').src = adData.author.avatar;
     ad.querySelector('.popup__title').textContent = adData.offer.title;
     ad.querySelector('.popup__text--price').textContent = adData.offer.price + ' ₽/ночь';
-    ad.querySelector('.popup__type').textContent = TypesMap[adData.offer.type.toLowerCase()];
+    ad.querySelector('.popup__type').textContent = TypesMap[adData.offer.type.toUpperCase()];
     ad.querySelector('.popup__text--capacity').textContent = adData.offer.rooms + ' комнаты для ' + adData.offer.guests + ' гостей';
     ad.querySelector('.popup__text--time').textContent = 'Заезд после ' + adData.offer.checkin + ', выезд до ' + adData.offer.checkout;
     ad.querySelector('.popup__features').innerHTML = '';
