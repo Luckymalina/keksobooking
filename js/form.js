@@ -28,25 +28,17 @@
     addressInput.value = coords.x + ', ' + coords.y;
   };
 
+  var BuildingMinPrice = {
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
+  };
+
   var onTypeInputChange = function (evt) {
-    switch (evt.target.value) {
-      case 'bungalo':
-        priceInput.min = 0;
-        priceInput.placeholder = '0';
-        break;
-      case 'flat':
-        priceInput.min = 1000;
-        priceInput.placeholder = '1000';
-        break;
-      case 'house':
-        priceInput.min = 5000;
-        priceInput.placeholder = '5000';
-        break;
-      case 'palace':
-        priceInput.min = 10000;
-        priceInput.placeholder = '10000';
-        break;
-    }
+    var minPrice = BuildingMinPrice[evt.target.value.toUpperCase()];
+    priceInput.min = minPrice;
+    priceInput.placeholder = minPrice.toString();
   };
 
   var onTimeInInputChange = function (evt) {
@@ -92,11 +84,8 @@
 
   var checkPlaceValidity = function () {
     var roomGuests = RoomGuestRation[roomNumberSelect.value];
-    if (roomGuests.indexOf(+capacitySelect.value) === -1) {
-      capacitySelect.setCustomValidity('Количество гостей не влезут в выбранную комнату');
-    } else {
-      capacitySelect.setCustomValidity('');
-    }
+    var message = roomGuests.indexOf(+capacitySelect.value) === -1 ? 'Количество гостей не влезут в выбранную комнату' : '';
+    capacitySelect.setCustomValidity(message);
   };
 
   var onRoomNumberSelectChange = function (evt) {
@@ -111,19 +100,24 @@
   var onSubmitBtnClick = function () {
     checkPlaceValidity();
   };
+
+  var onSuccessEscDown = function (evt) {
+    window.utils.onEscDown(evt, closeSuccess);
+  };
+
+  var onSuccessClick = function () {
+    closeSuccess();
+  };
+
   var closeSuccess = function () {
     success.classList.add('hidden');
+    document.removeEventListener('keydown', onSuccessEscDown);
+    success.removeEventListener('click', onSuccessClick);
   };
 
   var showSuccess = function () {
     success.classList.remove('hidden');
-    var onSuccessEscDown = function (evt) {
-      window.utils.onEscDown(evt, closeSuccess);
-    };
-    success.addEventListener('keydown', onSuccessEscDown);
-    var onSuccessClick = function () {
-      closeSuccess();
-    };
+    document.addEventListener('keydown', onSuccessEscDown);
     success.addEventListener('click', onSuccessClick);
   };
 
@@ -171,8 +165,8 @@
     priceInput.removeEventListener('change', onElementCheckValidity);
     titleInput.removeEventListener('change', onElementCheckValidity);
     typeInput.removeEventListener('change', onTypeInputChange);
-    timeInInput.removeEventListener('change', onTimeOutInputChange);
-    timeOutInput.removeEventListener('change', onTimeInInputChange);
+    timeInInput.removeEventListener('change', onTimeInInputChange);
+    timeOutInput.removeEventListener('change', onTimeOutInputChange);
     roomNumberSelect.removeEventListener('change', onRoomNumberSelectChange);
     capacitySelect.removeEventListener('change', onCapacitySelectChange);
     submitBtn.removeEventListener('click', onSubmitBtnClick);
