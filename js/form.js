@@ -111,19 +111,24 @@
   var onSubmitBtnClick = function () {
     checkPlaceValidity();
   };
+
+  var onSuccessEscDown = function (evt) {
+    window.utils.onEscDown(evt, closeSuccess);
+  };
+
+  var onSuccessClick = function () {
+    closeSuccess();
+  };
+
   var closeSuccess = function () {
     success.classList.add('hidden');
+    document.removeEventListener('keydown', onSuccessEscDown);
+    success.removeEventListener('click', onSuccessClick);
   };
 
   var showSuccess = function () {
     success.classList.remove('hidden');
-    var onSuccessEscDown = function (evt) {
-      window.utils.onEscDown(evt, closeSuccess);
-    };
-    success.addEventListener('keydown', onSuccessEscDown);
-    var onSuccessClick = function () {
-      closeSuccess();
-    };
+    document.addEventListener('keydown', onSuccessEscDown);
     success.addEventListener('click', onSuccessClick);
   };
 
@@ -171,8 +176,8 @@
     priceInput.removeEventListener('change', onElementCheckValidity);
     titleInput.removeEventListener('change', onElementCheckValidity);
     typeInput.removeEventListener('change', onTypeInputChange);
-    timeInInput.removeEventListener('change', onTimeOutInputChange);
-    timeOutInput.removeEventListener('change', onTimeInInputChange);
+    timeInInput.removeEventListener('change', onTimeInInputChange);
+    timeOutInput.removeEventListener('change', onTimeOutInputChange);
     roomNumberSelect.removeEventListener('change', onRoomNumberSelectChange);
     capacitySelect.removeEventListener('change', onCapacitySelectChange);
     submitBtn.removeEventListener('click', onSubmitBtnClick);

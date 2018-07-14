@@ -138,6 +138,8 @@
     var closeAdBtn = ad.querySelector('.popup__close');
     var closeAd = function () {
       ad.remove();
+      closeAdBtn.removeEventListener('click', onCloseAdBtnClick);
+      document.removeEventListener('keydown', onAdEscDown);
     };
     var onCloseAdBtnClick = function () {
       closeAd();
