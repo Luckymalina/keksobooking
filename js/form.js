@@ -92,11 +92,8 @@
 
   var checkPlaceValidity = function () {
     var roomGuests = RoomGuestRation[roomNumberSelect.value];
-    if (roomGuests.indexOf(+capacitySelect.value) === -1) {
-      capacitySelect.setCustomValidity('Количество гостей не влезут в выбранную комнату');
-    } else {
-      capacitySelect.setCustomValidity('');
-    }
+    var message = roomGuests.indexOf(+capacitySelect.value) === -1 ? 'Количество гостей не влезут в выбранную комнату' : '';
+    capacitySelect.setCustomValidity(message);
   };
 
   var onRoomNumberSelectChange = function (evt) {
