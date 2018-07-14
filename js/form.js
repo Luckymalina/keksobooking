@@ -28,25 +28,17 @@
     addressInput.value = coords.x + ', ' + coords.y;
   };
 
+  var BuildingMinPrice = {
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
+  };
+
   var onTypeInputChange = function (evt) {
-    switch (evt.target.value) {
-      case 'bungalo':
-        priceInput.min = 0;
-        priceInput.placeholder = '0';
-        break;
-      case 'flat':
-        priceInput.min = 1000;
-        priceInput.placeholder = '1000';
-        break;
-      case 'house':
-        priceInput.min = 5000;
-        priceInput.placeholder = '5000';
-        break;
-      case 'palace':
-        priceInput.min = 10000;
-        priceInput.placeholder = '10000';
-        break;
-    }
+    var minPrice = BuildingMinPrice[evt.target.value.toUpperCase()];
+    priceInput.min = minPrice;
+    priceInput.placeholder = minPrice.toString();
   };
 
   var onTimeInInputChange = function (evt) {
