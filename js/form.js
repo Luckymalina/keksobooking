@@ -8,6 +8,13 @@
     100: [0]
   };
 
+  var BuildingMinPrice = {
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
+  };
+
   var adForm = document.querySelector('.ad-form');
   var adFormFieldsets = document.querySelectorAll('.ad-form__element');
   var adFormHeader = document.querySelector('.ad-form-header');
@@ -26,13 +33,6 @@
 
   var setAddressCoords = function (coords) {
     addressInput.value = coords.x + ', ' + coords.y;
-  };
-
-  var BuildingMinPrice = {
-    BUNGALO: 0,
-    FLAT: 1000,
-    HOUSE: 5000,
-    PALACE: 10000
   };
 
   var onTypeInputChange = function (evt) {
